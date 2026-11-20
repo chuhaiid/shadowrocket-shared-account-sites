@@ -1,7 +1,7 @@
 name: daily-update
 on:
   schedule:
-    - cron: "41 */6 * * *"    # 每 6 小时(UTC 整点后 41 分,避开整点排队);核对结果没变且当天已记过就不提交
+    - cron: "41 */6 * * *"    # 每 6 小时(UTC 整点后 41 分,避开整点排队);有货 / 缺货没变就不提交
   workflow_dispatch:
 permissions:
   contents: write
@@ -21,5 +21,5 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           if git diff --quiet; then echo "no change"; exit 0; fi
           git add README.md
-          git commit -m "核对共享页 $(TZ=Asia/Shanghai date '+%F %H:%M')"
+          git commit -m "更新有货状态 $(TZ=Asia/Shanghai date '+%F %H:%M')"
           git push
